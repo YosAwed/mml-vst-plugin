@@ -1,0 +1,5 @@
+﻿  include_juce_audio_plugin_client_VST3.cpp
+     ライブラリ D:\githubio\MMLPPlugin\Builds\VisualStudio2022\x64\Debug\VST3\MML.lib とオブジェクト D:\githubio\MMLPPlugin\Builds\VisualStudio2022\x64\Debug\VST3\MML.exp を作成中
+  MML_VST3.vcxproj -> D:\githubio\MMLPPlugin\Builds\VisualStudio2022\x64\Debug\VST3\MML.dll
+          1 個のファイルをコピーしました。
+  : Info: Successfully generated a manifest for MML

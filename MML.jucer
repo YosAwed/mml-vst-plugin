@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="Yu2A3F" name="MML" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginFormats="buildVST3"
+              companyName="NANKIN" pluginCharacteristicsValue="pluginIsMidiEffectPlugin,pluginProducesMidiOut"
+              pluginVST3Category="Filter,Fx,Instrument">
+  <MAINGROUP id="EWCo2D" name="MML">
+    <GROUP id="{72D32037-B5C9-21F2-5BCE-C55F531534BF}" name="Source">
+      <FILE id="zsMOEM" name="EnhancedMMLParser.cpp" compile="1" resource="0"
+            file="Source/MMLParser/EnhancedMMLParser.cpp"/>
+      <FILE id="cyAPgl" name="EnhancedMMLParser.h" compile="0" resource="0"
+            file="Source/MMLParser/EnhancedMMLParser.h"/>
+      <FILE id="ZYJoiJ" name="MMLPluginEditor.cpp" compile="1" resource="0"
+            file="Source/MMLPluginEditor.cpp"/>
+      <FILE id="fnJ2W3" name="MMLPluginEditor.h" compile="0" resource="0"
+            file="Source/MMLPluginEditor.h"/>
+      <FILE id="tPG5fd" name="MMLPluginProcessor.cpp" compile="1" resource="0"
+            file="Source/MMLPluginProcessor.cpp"/>
+      <FILE id="Eeciun" name="MMLPluginProcessor.h" compile="0" resource="0"
+            file="Source/MMLPluginProcessor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="MML"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="MML"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="F:/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="F:/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+</JUCERPROJECT>

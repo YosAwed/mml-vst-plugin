@@ -1,0 +1,144 @@
+﻿  EnhancedMMLParser.cpp
+  MMLPluginEditor.cpp
+  MMLPluginProcessor.cpp
+  include_juce_audio_basics.cpp
+  include_juce_audio_devices.cpp
+  include_juce_audio_formats.cpp
+  include_juce_audio_plugin_client_ARA.cpp
+  include_juce_audio_processors_ara.cpp
+  include_juce_audio_processors_lv2_libs.cpp
+  include_juce_audio_utils.cpp
+  include_juce_core_CompilationTime.cpp
+  include_juce_data_structures.cpp
+  include_juce_events.cpp
+  include_juce_graphics_Harfbuzz.cpp
+  include_juce_gui_extra.cpp
+D:\githubio\MMLPPlugin\Source\MMLParser\EnhancedMMLParser.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+D:\githubio\MMLPPlugin\Source\MMLPluginProcessor.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+D:\githubio\MMLPPlugin\Source\MMLPluginProcessor.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../Source/MMLPluginProcessor.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-style.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-algs.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-layout-common.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-var-mvar-table.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-var-common.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-buffer-serialize.cc(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-common.cc(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-coretext-shape.cc(895,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-var-fvar-table.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+D:\githubio\MMLPPlugin\Source\MMLParser\EnhancedMMLParser.cpp(45,16): warning C4244: '初期化中': 'juce::juce_wchar' から 'char' への変換です。データが失われる可能性があります。
+D:\githubio\MMLPPlugin\Source\MMLParser\EnhancedMMLParser.cpp(160,19): warning C4244: '初期化中': 'juce::juce_wchar' から 'char' への変換です。データが失われる可能性があります。
+D:\githubio\MMLPPlugin\Source\MMLParser\EnhancedMMLParser.cpp(350,93): warning C4100: 'result': 参照されないパラメーター
+D:\githubio\MMLPPlugin\Source\MMLParser\EnhancedMMLParser.cpp(350,74): warning C4100: 'text': 参照されないパラメーター
+D:\githubio\MMLPPlugin\Source\MMLParser\EnhancedMMLParser.cpp(425,20): warning C4244: '初期化中': 'juce::juce_wchar' から 'char' への変換です。データが失われる可能性があります。
+D:\githubio\MMLPPlugin\Source\MMLPluginProcessor.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../Source/MMLPluginEditor.cpp' をコンパイルしています)
+  
+D:\githubio\MMLPPlugin\Source\MMLPluginEditor.cpp(11,34): warning C4996: 'juce::Font::Font': Use the constructor that takes a FontOptions argument
+D:\githubio\MMLPPlugin\Source\MMLPluginEditor.cpp(16,40): warning C4996: 'juce::Font::Font': Use the constructor that takes a FontOptions argument
+D:\githubio\MMLPPlugin\Source\MMLPluginEditor.cpp(35,35): warning C4996: 'juce::Font::Font': Use the constructor that takes a FontOptions argument
+D:\githubio\MMLPPlugin\Source\MMLPluginProcessor.cpp(194,57): warning C4458: 'mmlText' を宣言すると、クラス メンバーが隠蔽されます
+      D:\githubio\MMLPPlugin\Source\MMLPluginProcessor.h(95,18):
+      'MMLPlugin::MMLPluginProcessor::mmlText' の宣言を確認してください
+  
+D:\githubio\MMLPPlugin\Source\MMLPluginEditor.cpp(82,68): warning C4100: 'editor': 参照されないパラメーター
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\OT\Color\sbix\sbix.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-meta-table.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-stat-table.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-layout-base-table.hh(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-layout.cc(814,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-layout.cc(1715,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-math.cc(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-shaper-indic.cc(847,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-tag-table.hh(380,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-tag-table.hh(1088,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-ot-tag-table.hh(1426,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics_Harfbuzz.cpp' をコンパイルしています)
+  
+  include_juce_audio_processors.cpp
+  include_juce_core.cpp
+  include_juce_graphics.cpp
+  include_juce_gui_basics.cpp
+F:\JUCE\modules\juce_core\text\juce_CharacterFunctions.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_core.cpp' をコンパイルしています)
+  
+F:\JUCE\modules\juce_graphics\fonts\harfbuzz\hb-style.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル '../../JuceLibraryCode/include_juce_graphics.cpp' をコンパイルしています)
+  
+  include_juce_graphics_Sheenbidi.c
+  MML_SharedCode.vcxproj -> D:\githubio\MMLPPlugin\Builds\VisualStudio2022\x64\Debug\Shared Code\MML.lib

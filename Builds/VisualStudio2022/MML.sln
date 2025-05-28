@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio Version 17
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MML - VST3", "MML_VST3.vcxproj", "{B66FA500-C054-607E-9D3B-00C13400010D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7F5EC6EC-6F22-2D23-D87A-789CFB379317} = {7F5EC6EC-6F22-2D23-D87A-789CFB379317}
+		{40D0AFE1-EF97-1984-6B90-81126205E0AC} = {40D0AFE1-EF97-1984-6B90-81126205E0AC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MML - Shared Code", "MML_SharedCode.vcxproj", "{7F5EC6EC-6F22-2D23-D87A-789CFB379317}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MML - VST3 Manifest Helper", "MML_VST3ManifestHelper.vcxproj", "{40D0AFE1-EF97-1984-6B90-81126205E0AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B66FA500-C054-607E-9D3B-00C13400010D}.Debug|x64.ActiveCfg = Debug|x64
+		{B66FA500-C054-607E-9D3B-00C13400010D}.Debug|x64.Build.0 = Debug|x64
+		{B66FA500-C054-607E-9D3B-00C13400010D}.Release|x64.ActiveCfg = Release|x64
+		{B66FA500-C054-607E-9D3B-00C13400010D}.Release|x64.Build.0 = Release|x64
+		{7F5EC6EC-6F22-2D23-D87A-789CFB379317}.Debug|x64.ActiveCfg = Debug|x64
+		{7F5EC6EC-6F22-2D23-D87A-789CFB379317}.Debug|x64.Build.0 = Debug|x64
+		{7F5EC6EC-6F22-2D23-D87A-789CFB379317}.Release|x64.ActiveCfg = Release|x64
+		{7F5EC6EC-6F22-2D23-D87A-789CFB379317}.Release|x64.Build.0 = Release|x64
+		{40D0AFE1-EF97-1984-6B90-81126205E0AC}.Debug|x64.ActiveCfg = Debug|x64
+		{40D0AFE1-EF97-1984-6B90-81126205E0AC}.Debug|x64.Build.0 = Debug|x64
+		{40D0AFE1-EF97-1984-6B90-81126205E0AC}.Release|x64.ActiveCfg = Release|x64
+		{40D0AFE1-EF97-1984-6B90-81126205E0AC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
