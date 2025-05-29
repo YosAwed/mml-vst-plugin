@@ -1,0 +1,68 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\githubio\\MMLPPlugin\\Builds\\VisualStudio2022\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5EC6EC-6F22-2D23-D87A-789CFB379317}|MML_SharedCode.vcxproj|D:\\githubio\\MMLPPlugin\\Source\\MMLParser\\EnhancedMMLParser.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5EC6EC-6F22-2D23-D87A-789CFB379317}|MML_SharedCode.vcxproj|D:\\githubio\\MMLPPlugin\\Source\\MMLPluginProcessor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5EC6EC-6F22-2D23-D87A-789CFB379317}|MML_SharedCode.vcxproj|D:\\githubio\\MMLPPlugin\\Source\\MMLPluginEditor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MMLPluginEditor.cpp",
+              "DocumentMoniker": "D:\\githubio\\MMLPPlugin\\Source\\MMLPluginEditor.cpp",
+              "RelativeDocumentMoniker": "..\\..\\Source\\MMLPluginEditor.cpp",
+              "ToolTip": "D:\\githubio\\MMLPPlugin\\Source\\MMLPluginEditor.cpp",
+              "RelativeToolTip": "..\\..\\Source\\MMLPluginEditor.cpp",
+              "ViewState": "AgIAADIAAAAAAAAAAAAewEkAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-28T12:36:36.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EnhancedMMLParser.cpp",
+              "DocumentMoniker": "D:\\githubio\\MMLPPlugin\\Source\\MMLParser\\EnhancedMMLParser.cpp",
+              "RelativeDocumentMoniker": "..\\..\\Source\\MMLParser\\EnhancedMMLParser.cpp",
+              "ToolTip": "D:\\githubio\\MMLPPlugin\\Source\\MMLParser\\EnhancedMMLParser.cpp",
+              "RelativeToolTip": "..\\..\\Source\\MMLParser\\EnhancedMMLParser.cpp",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-28T12:36:03.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MMLPluginProcessor.cpp",
+              "DocumentMoniker": "D:\\githubio\\MMLPPlugin\\Source\\MMLPluginProcessor.cpp",
+              "RelativeDocumentMoniker": "..\\..\\Source\\MMLPluginProcessor.cpp",
+              "ToolTip": "D:\\githubio\\MMLPPlugin\\Source\\MMLPluginProcessor.cpp",
+              "RelativeToolTip": "..\\..\\Source\\MMLPluginProcessor.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-28T12:34:17.301Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
