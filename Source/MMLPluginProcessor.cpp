@@ -115,12 +115,16 @@ void MMLPluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         auto playHeadPtr = getPlayHead();
         if (playHeadPtr != nullptr) {
 #if JUCE_VERSION >= 0x060000
-            auto optionalInfo = playHeadPtr->getPosition();
-            if (optionalInfo.hasValue()) {
-                auto& info = *optionalInfo;
-                currentBpm = info.getBpm().orFallback(120.0);
-                ppqPosition = info.getPpqPosition().orFallback(0.0);
-                isPlaying = info.getIsPlaying().orFallback(false);
+            if (auto posInfo = playHeadPtr->getPosition()) {
+                // u5024u304cu5b58u5728u3059u308bu5834u5408u306eu307fu51e6u7406u3092u884cu3046
+                if (auto bpm = posInfo->getBpm())
+                    currentBpm = *bpm;
+                
+                if (auto ppq = posInfo->getPpqPosition())
+                    ppqPosition = *ppq;
+                
+                // getIsPlaying()u306fu76f4u63a5boolu3092u8fd4u3059u53efu80fdu6027u304cu3042u308b
+                isPlaying = posInfo->getIsPlaying();
             }
 #else
             juce::AudioPlayHead::CurrentPositionInfo posInfo;
@@ -131,8 +135,6 @@ void MMLPluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
 #endif
         }
         
-        // Debug current playback position
-        DBG("Current PPQ: " + juce::String(ppqPosition) + ", BPM: " + juce::String(currentBpm) + ", Playing: " + juce::String(isPlaying));
         
         // Force process for newly-added MML input
         if (needsMidiUpdate) {
