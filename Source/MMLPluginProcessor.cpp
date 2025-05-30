@@ -5,10 +5,7 @@
 namespace MMLPlugin {
 //==============================================================================
 MMLPluginProcessor::MMLPluginProcessor()
-    : AudioProcessor(BusesProperties()
-        .withInput("Input", juce::AudioChannelSet::stereo(), true)
-        .withOutput("Output", juce::AudioChannelSet::stereo(), true)
-      )
+    : AudioProcessor(BusesProperties())
     , parameters(*this, nullptr, "Parameters", {})
 {
     needsMidiUpdate = false;
@@ -77,9 +74,11 @@ void MMLPluginProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     // Initialization before playback
     juce::ignoreUnused(sampleRate, samplesPerBlock);
     
-    // Clear existing MIDI sequence
-    currentSequence.clear();
-    needsMidiUpdate = false;
+    // Don't clear sequence - let it persist between playback sessions
+    // Instead, mark that we need to process it
+    if (currentSequence.getNumEvents() > 0) {
+        needsMidiUpdate = true;
+    }
 }
 
 void MMLPluginProcessor::releaseResources()
@@ -103,54 +102,73 @@ bool MMLPluginProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
 
 void MMLPluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    // Clear input MIDI messages
-    midiMessages.clear();
+    // Create a temporary buffer for our MIDI events
+    juce::MidiBuffer tempMidiBuffer;
     
-    // If MIDI data needs to be sent
-    if (needsMidiUpdate && currentSequence.getNumEvents() > 0) {
+    // If MIDI data needs to be sent or was recently updated
+    if (currentSequence.getNumEvents() > 0) {
         // Get current playback position info
-        juce::AudioPlayHead::CurrentPositionInfo posInfo;
-        auto playHeadPtr = getPlayHead();
+        double currentBpm = 120.0;  // Default BPM if none provided
+        double ppqPosition = 0.0;   // Default PPQ position
+        bool isPlaying = false;     // Playback status
         
+        auto playHeadPtr = getPlayHead();
         if (playHeadPtr != nullptr) {
 #if JUCE_VERSION >= 0x060000
             auto optionalInfo = playHeadPtr->getPosition();
             if (optionalInfo.hasValue()) {
                 auto& info = *optionalInfo;
-                posInfo.bpm = info.getBpm().orFallback(120.0);
-                posInfo.timeInSamples = info.getTimeInSamples().orFallback(0);
-                posInfo.timeInSeconds = info.getTimeInSeconds().orFallback(0.0);
-                posInfo.ppqPosition = info.getPpqPosition().orFallback(0.0);
+                currentBpm = info.getBpm().orFallback(120.0);
+                ppqPosition = info.getPpqPosition().orFallback(0.0);
+                isPlaying = info.getIsPlaying().orFallback(false);
             }
 #else
+            juce::AudioPlayHead::CurrentPositionInfo posInfo;
             playHeadPtr->getCurrentPosition(posInfo);
+            currentBpm = posInfo.bpm;
+            ppqPosition = posInfo.ppqPosition;
+            isPlaying = posInfo.isPlaying;
 #endif
         }
-        double samplesPerSecond = getSampleRate();
-        double ppqPerSecond = posInfo.bpm / 60.0;
         
-        for (int i = 0; i < currentSequence.getNumEvents(); ++i) {
-            const auto* event = currentSequence.getEventPointer(i);
+        // Debug current playback position
+        DBG("Current PPQ: " + juce::String(ppqPosition) + ", BPM: " + juce::String(currentBpm) + ", Playing: " + juce::String(isPlaying));
+        
+        // Force process for newly-added MML input
+        if (needsMidiUpdate) {
+            double samplesPerSecond = getSampleRate();
+            double ppqPerSecond = currentBpm / 60.0;
             
-            // In Cubase, use timestamp to place MIDI events
-            // Convert PPQ position to sample position
-            double eventPpq = event->message.getTimeStamp();
-            double eventOffsetSeconds = eventPpq / ppqPerSecond;
-            int eventSamplePosition = static_cast<int>(eventOffsetSeconds * samplesPerSecond);
+            for (int i = 0; i < currentSequence.getNumEvents(); ++i) {
+                const auto* event = currentSequence.getEventPointer(i);
+                
+                // Convert MML timestamp to appropriate buffer position
+                double eventPpq = event->message.getTimeStamp();
+                double eventOffsetSeconds = eventPpq / ppqPerSecond;
+                int eventSamplePosition = static_cast<int>(eventOffsetSeconds * samplesPerSecond);
+                
+                // Ensure valid sample position within buffer
+                eventSamplePosition = juce::jmin(eventSamplePosition, buffer.getNumSamples() - 1);
+                eventSamplePosition = juce::jmax(0, eventSamplePosition);
+                
+                // Add event to our temporary buffer
+                tempMidiBuffer.addEvent(event->message, eventSamplePosition);
+            }
             
-            // Ensure not to exceed buffer size
-            eventSamplePosition = juce::jmin(eventSamplePosition, buffer.getNumSamples() - 1);
-            eventSamplePosition = juce::jmax(0, eventSamplePosition);
+            // Only clear flag when we've successfully processed events
+            needsMidiUpdate = false;
             
-            // Add event to buffer
-            midiMessages.addEvent(event->message, eventSamplePosition);
+            // Debug MIDI output
+            DBG("Processed " + juce::String(currentSequence.getNumEvents()) + " MIDI events from MML");
         }
-        
-        // Mark MIDI data as processed
-        needsMidiUpdate = false;
-        
-        // Debug output
-        DBG("Added " + juce::String(currentSequence.getNumEvents()) + " MIDI events to buffer");
+    }
+    
+    // Add our processed MIDI to output buffer
+    if (!tempMidiBuffer.isEmpty()) {
+        // Add our events to the output MIDI buffer
+        for (auto metadata : tempMidiBuffer) {
+            midiMessages.addEvent(metadata.getMessage(), metadata.samplePosition);
+        }
     }
     
     // Clear audio buffer (process only MIDI)
@@ -258,6 +276,9 @@ void MMLPluginProcessor::sendMidiToTrack()
     
     // Force update on next processBlock call
     needsMidiUpdate = true;
+    
+    // Debug message for tracking
+    DBG("MIDI update requested - sequence has " + juce::String(currentSequence.getNumEvents()) + " events");
 }
 
 juce::String MMLPluginProcessor::getMMLText() const
