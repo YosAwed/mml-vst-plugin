@@ -21,7 +21,15 @@ msbuild MML.sln /p:Configuration=Debug /p:Platform=x64
 msbuild MML.sln /p:Configuration=Release /p:Platform=x64
 
 # Alternative: Open MML.sln in Visual Studio 2022 and build
+# Or use the shortcut from project root:
+cd "Builds/VisualStudio2022" && msbuild MML.sln /p:Configuration=Debug /p:Platform=x64
 ```
+
+### Development Workflow
+- **Project Configuration**: Use Projucer to modify `MML.jucer` and regenerate Visual Studio projects
+- **Code Changes**: Edit source files in `Source/` directory, then rebuild
+- **Testing**: Load the built VST3 plugin in a DAW (preferably Cubase 14) to test functionality
+- **Plugin Location**: Built VST3 files are output to `Builds/VisualStudio2022/x64/Debug/VST3/MML.vst3/`
 
 ### Build Targets
 - **MML_SharedCode**: Static library containing core plugin logic
@@ -83,3 +91,13 @@ The project requires these JUCE modules (configured in MML.jucer):
 
 ### Cubase 14 Optimization
 The code includes specific optimizations and comments indicating Cubase 14 compatibility focus. When making changes, ensure MIDI timing and output format remain compatible with Cubase's expectations for MIDI effects.
+
+### Thread Safety and State Management
+- The plugin uses `std::atomic<bool> needsMidiUpdate` for thread-safe MIDI processing
+- State is managed through `juce::AudioProcessorValueTreeState parameters`
+- MIDI sequence generation is handled separately from the audio processing thread
+
+### Plugin Installation and Testing
+- Built VST3 plugins are located in `Builds/VisualStudio2022/x64/[Debug|Release]/VST3/MML.vst3/`
+- For testing, copy the `.vst3` bundle to your DAW's VST3 plugins folder
+- The plugin appears in DAWs under categories: Filter, Fx, Instrument due to its hybrid nature
