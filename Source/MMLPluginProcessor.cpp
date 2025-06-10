@@ -10,6 +10,9 @@ MMLPluginProcessor::MMLPluginProcessor()
 {
     needsMidiUpdate = false;
     lastMidiSendTime = 0;
+    sequenceStartTime = 0.0;
+    sequenceIsPlaying = false;
+    nextEventIndex = 0;
 }
 
 MMLPluginProcessor::~MMLPluginProcessor()
@@ -102,122 +105,71 @@ bool MMLPluginProcessor::isBusesLayoutSupported(const BusesLayout& layouts) cons
 
 void MMLPluginProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    // Create a temporary buffer for our MIDI events
-    juce::MidiBuffer tempMidiBuffer;
-    
-    // If MIDI data needs to be sent or was recently updated
-    if (currentSequence.getNumEvents() > 0) {
-        // Get current playback position info
-        double currentBpm = 120.0;  // Default BPM if none provided
-        double ppqPosition = 0.0;   // Default PPQ position
-        bool isPlaying = false;     // Playback status
-        
-        auto playHeadPtr = getPlayHead();
-        if (playHeadPtr != nullptr) {
-#if JUCE_VERSION >= 0x060000
-            if (auto posInfo = playHeadPtr->getPosition()) {
-                // Process only when position info exists
-                if (auto bpm = posInfo->getBpm())
-                    currentBpm = *bpm;
-                
-                if (auto ppq = posInfo->getPpqPosition())
-                    ppqPosition = *ppq;
-                
-                // getIsPlaying() returns bool directly
-                isPlaying = posInfo->getIsPlaying();
-            }
-#else
-            juce::AudioPlayHead::CurrentPositionInfo posInfo;
-            playHeadPtr->getCurrentPosition(posInfo);
-            currentBpm = posInfo.bpm;
-            ppqPosition = posInfo.ppqPosition;
-            isPlaying = posInfo.isPlaying;
-#endif
-        }
-        
-        // Improved Cubase 14 compatibility: ensure all notes are played in sync with tempo
-        if (needsMidiUpdate || isPlaying) {
-            double samplesPerSecond = getSampleRate();
-            double ppqPerSecond = currentBpm / 60.0;
-            
-            // If new update exists, insert MML to MIDI track
-            if (needsMidiUpdate) {
-                // Dump all notes
-                DBG("Converting all MML notes to MIDI for Cubase track");
-                
-                // Classify note-on and note-off events
-                juce::Array<juce::MidiMessage> noteOnMessages;
-                juce::Array<juce::MidiMessage> noteOffMessages;
-                
-                // Collect all notes
-                for (int i = 0; i < currentSequence.getNumEvents(); ++i) {
-                    const auto* event = currentSequence.getEventPointer(i);
-                    juce::MidiMessage midiMsg = event->message;
-                    
-                    if (midiMsg.isNoteOn()) {
-                        noteOnMessages.add(midiMsg);
-                    } else if (midiMsg.isNoteOff()) {
-                        noteOffMessages.add(midiMsg);
-                    } else {
-                        // Add other messages as-is
-                        tempMidiBuffer.addEvent(midiMsg, 0);
-                    }
-                }
-                
-                // Add note-on messages with correctly set timestamps
-                for (auto& noteOn : noteOnMessages) {
-                    // Get note timestamp (PPQ units within buffer)
-                    double timestamp = noteOn.getTimeStamp();
-                    
-                    // Calculate relative timestamp considering current playback position
-                    // Cubase considers current playback position, so set to 0 here
-                    juce::MidiMessage newNoteOn = noteOn;
-                    // Slightly delay to avoid playback timing issues
-                    newNoteOn.setTimeStamp(0.0);
-                    
-                    // Insert note into MIDI track
-                    midiMessages.addEvent(newNoteOn, 0);
-                    DBG("Added note ON to Cubase track: Channel=" + juce::String(newNoteOn.getChannel()) + 
-                        ", Note=" + juce::String(newNoteOn.getNoteNumber()) + ", Velocity=" + juce::String(newNoteOn.getVelocity()));
-                }
-                
-                // Add all note-off messages in the same way
-                for (auto& noteOff : noteOffMessages) {
-                    double timestamp = noteOff.getTimeStamp();
-                    juce::MidiMessage newNoteOff = noteOff;
-                    // Set note-off to same relative time as note-on
-                    newNoteOff.setTimeStamp(0.0);
-                    
-                    midiMessages.addEvent(newNoteOff, 0);
-                    DBG("Added note OFF to Cubase track: Channel=" + juce::String(newNoteOff.getChannel()) + 
-                        ", Note=" + juce::String(newNoteOff.getNoteNumber()));
-                }
-                
-                // Processing complete flag
-                needsMidiUpdate = false;
-                DBG("Processed " + juce::String(currentSequence.getNumEvents()) + " MIDI events and sent to Cubase track");
-                
-                // Process here if adding to Cubase internal track
-            }
-            // Normal playback processing is unnecessary, so commented out
-            /*
-            else if (isPlaying) {
-                // Implement normal processing during playback if needed here
-            }
-            */
-        }
-    }
-    
-    // Add our processed MIDI to output buffer
-    if (!tempMidiBuffer.isEmpty()) {
-        // Add our events to the output MIDI buffer
-        for (auto metadata : tempMidiBuffer) {
-            midiMessages.addEvent(metadata.getMessage(), metadata.samplePosition);
-        }
-    }
-    
-    // Clear audio buffer (process only MIDI)
+    // Clear audio buffer (MIDI-only plugin)
     buffer.clear();
+    
+    // If new MIDI data needs to be processed
+    if (needsMidiUpdate && currentSequence.getNumEvents() > 0) {
+        // Start the sequence playback
+        sequenceStartTime = juce::Time::getMillisecondCounterHiRes() / 1000.0;
+        sequenceIsPlaying = true;
+        nextEventIndex = 0;
+        needsMidiUpdate = false;
+        
+        DBG("Starting MIDI sequence playback with " + juce::String(currentSequence.getNumEvents()) + " events");
+    }
+    
+    // Process MIDI events if sequence is playing
+    if (sequenceIsPlaying && currentSequence.getNumEvents() > 0) {
+        double currentTime = juce::Time::getMillisecondCounterHiRes() / 1000.0;
+        double elapsedTime = currentTime - sequenceStartTime;
+        
+        // Process events that should occur in this buffer
+        int bufferSamples = buffer.getNumSamples();
+        double bufferDuration = bufferSamples / getSampleRate();
+        
+        // Check all events to see if they should be played now
+        while (nextEventIndex < currentSequence.getNumEvents()) {
+            const auto* event = currentSequence.getEventPointer(nextEventIndex);
+            double eventTime = event->message.getTimeStamp();
+            
+            // If event time has passed or is within this buffer
+            if (eventTime <= elapsedTime + bufferDuration) {
+                // Calculate sample position within current buffer
+                double timeInBuffer = eventTime - elapsedTime;
+                int samplePosition = static_cast<int>(timeInBuffer * getSampleRate());
+                
+                // Clamp to buffer bounds
+                samplePosition = juce::jlimit(0, bufferSamples - 1, samplePosition);
+                
+                // Add the event to output
+                juce::MidiMessage message = event->message;
+                midiMessages.addEvent(message, samplePosition);
+                
+                DBG("Playing MIDI event at time " + juce::String(eventTime) + 
+                    "s (elapsed: " + juce::String(elapsedTime) + 
+                    "s, sample: " + juce::String(samplePosition) + ")");
+                
+                if (message.isNoteOn()) {
+                    DBG("  Note ON: " + juce::String(message.getNoteNumber()) + 
+                        " velocity " + juce::String(message.getVelocity()));
+                } else if (message.isNoteOff()) {
+                    DBG("  Note OFF: " + juce::String(message.getNoteNumber()));
+                }
+                
+                nextEventIndex++;
+            } else {
+                // No more events for this buffer
+                break;
+            }
+        }
+        
+        // Check if sequence is complete
+        if (nextEventIndex >= currentSequence.getNumEvents()) {
+            sequenceIsPlaying = false;
+            DBG("MIDI sequence playback completed");
+        }
+    }
 }
 
 //==============================================================================
@@ -306,13 +258,10 @@ juce::String MMLPluginProcessor::getErrorMessage() const
 
 void MMLPluginProcessor::sendMidiToTrack()
 {
-    // Send data to Cubase 14 MIDI track
+    // Schedule MIDI sequence for playback
     lastMidiSendTime = juce::Time::currentTimeMillis();
-    
-    // Force update on next processBlock call
     needsMidiUpdate = true;
     
-    // Add debug information to ensure all notes are correctly inserted into track
     DBG("=== MML to MIDI conversion requested ===");
     DBG("MIDI sequence contains " + juce::String(currentSequence.getNumEvents()) + " events");
     
@@ -322,28 +271,19 @@ void MMLPluginProcessor::sendMidiToTrack()
     
     for (int i = 0; i < currentSequence.getNumEvents(); ++i) {
         const auto* event = currentSequence.getEventPointer(i);
-        if (event->message.isNoteOn())
+        if (event->message.isNoteOn()) {
             noteOnCount++;
-        else if (event->message.isNoteOff())
+            DBG("Event " + juce::String(i) + ": Note ON at " + juce::String(event->message.getTimeStamp()) + 
+                "s, Note=" + juce::String(event->message.getNoteNumber()));
+        } else if (event->message.isNoteOff()) {
             noteOffCount++;
-    }
-    
-    DBG("Notes: " + juce::String(noteOnCount) + " note-on, " + juce::String(noteOffCount) + " note-off events");
-    
-    // Get Cubase playback head information
-    if (auto* playHead = getPlayHead()) {
-#if JUCE_VERSION >= 0x060000
-        if (auto posInfo = playHead->getPosition()) {
-            // Update if time information is available
-            double currentPos = posInfo->getPpqPosition() ? *posInfo->getPpqPosition() : 0.0;
-            double currentBpm = posInfo->getBpm() ? *posInfo->getBpm() : 120.0;
-            
-            DBG("Current playback position: PPQ=" + juce::String(currentPos) + ", BPM=" + juce::String(currentBpm));
+            DBG("Event " + juce::String(i) + ": Note OFF at " + juce::String(event->message.getTimeStamp()) + 
+                "s, Note=" + juce::String(event->message.getNoteNumber()));
         }
-#endif
     }
     
-    DBG("MML conversion will be processed in the next audio callback");
+    DBG("Total: " + juce::String(noteOnCount) + " note-on, " + juce::String(noteOffCount) + " note-off events");
+    DBG("Sequence will start playing in next audio callback");
 }
 
 juce::String MMLPluginProcessor::getMMLText() const

@@ -99,6 +99,11 @@ private:
     std::atomic<bool> needsMidiUpdate;
     juce::int64 lastMidiSendTime;
     
+    // MIDI event scheduling
+    double sequenceStartTime;
+    bool sequenceIsPlaying;
+    int nextEventIndex;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MMLPluginProcessor)
 };
 
