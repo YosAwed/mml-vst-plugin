@@ -1,6 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <atomic>
 #include "MMLParser/EnhancedMMLParser.h"
 
 namespace MMLPlugin {
@@ -49,8 +50,9 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    //==============================================================================
-    // MML処理メソッド
+    /**
+     * Initializes the MML plugin processor.
+	 */
     
     /**
      * Processes MML text and converts it to a MIDI sequence.
@@ -94,7 +96,7 @@ private:
     juce::MidiMessageSequence currentSequence;
     juce::String mmlText;
     juce::String errorMessage;
-    bool needsMidiUpdate;
+    std::atomic<bool> needsMidiUpdate;
     juce::int64 lastMidiSendTime;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MMLPluginProcessor)

@@ -118,10 +118,8 @@ void MMLPluginEditor::processMMLText()
     
     if (success)
     {
-        statusLabel.setText("Conversion successful! MIDI data sent to Cubase", juce::dontSendNotification);
-        
         int numEvents = audioProcessor.getMidiSequence().getNumEvents();
-        statusLabel.setText("Conversion successful! Generated " + juce::String(numEvents) + " MIDI events", juce::dontSendNotification);
+        statusLabel.setText("SUCCESS: " + juce::String(numEvents) + " MIDI events sent to Cubase track", juce::dontSendNotification);
     }
     else
     {

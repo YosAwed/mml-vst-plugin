@@ -1,4 +1,6 @@
 #include "EnhancedMMLParser.h"
+#include <climits>
+#include <algorithm>
 
 EnhancedMMLParser::MMLNote::MMLNote()
     : noteName('c'), accidental(0), octave(4), duration(0.25), isTied(false), timestamp(0.0) {}
@@ -253,8 +255,17 @@ bool EnhancedMMLParser::parseOctave(ParseState& state, const juce::String& text)
     // Parse octave number
     if (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]))
     {
-        int octave = text[state.position] - '0';
-        state.octave = juce::jlimit(0, 8, octave);
+        char digitChar = text[state.position];
+        if (digitChar < '0' || digitChar > '9') {
+            errorMessage = "Invalid octave character at position " + juce::String(state.position);
+            return false;
+        }
+        int octave = digitChar - '0';
+        if (octave < 0 || octave > 8) {
+            errorMessage = "Octave out of range (0-8) at position " + juce::String(state.position);
+            return false;
+        }
+        state.octave = octave;
         state.position++;
         return true;
     }
@@ -296,10 +307,17 @@ bool EnhancedMMLParser::parseTempo(ParseState& state, const juce::String& text)
     if (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]))
     {
         int tempo = 0;
-        while (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]))
+        int digitCount = 0;
+        while (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]) && digitCount < 4)
         {
-            tempo = tempo * 10 + (text[state.position] - '0');
+            int digit = text[state.position] - '0';
+            if (tempo > (INT_MAX - digit) / 10) {
+                errorMessage = "Tempo value overflow at position " + juce::String(state.position);
+                return false;
+            }
+            tempo = tempo * 10 + digit;
             state.position++;
+            digitCount++;
         }
         
         // Check tempo range
@@ -326,10 +344,17 @@ bool EnhancedMMLParser::parseVolume(ParseState& state, const juce::String& text)
     if (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]))
     {
         int volume = 0;
-        while (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]))
+        int digitCount = 0;
+        while (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]) && digitCount < 3)
         {
-            volume = volume * 10 + (text[state.position] - '0');
+            int digit = text[state.position] - '0';
+            if (volume > (INT_MAX - digit) / 10) {
+                errorMessage = "Volume value overflow at position " + juce::String(state.position);
+                return false;
+            }
+            volume = volume * 10 + digit;
             state.position++;
+            digitCount++;
         }
         
         // Check volume range
@@ -393,10 +418,17 @@ bool EnhancedMMLParser::parseEndLoop(ParseState& state, const juce::String& text
         else if (juce::CharacterFunctions::isDigit(text[state.position]))
         {
             count = 0;
-            while (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]))
+            int digitCount = 0;
+            while (state.position < text.length() && juce::CharacterFunctions::isDigit(text[state.position]) && digitCount < 3)
             {
-                count = count * 10 + (text[state.position] - '0');
+                int digit = text[state.position] - '0';
+                if (count > (INT_MAX - digit) / 10) {
+                    errorMessage = "Loop count overflow at position " + juce::String(state.position);
+                    return false;
+                }
+                count = count * 10 + digit;
                 state.position++;
+                digitCount++;
             }
         }
     }
